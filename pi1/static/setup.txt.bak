@@ -1,0 +1,273 @@
+plugin.tx_mmpropman_pi1 {
+	#language = de;
+	allowCaching = 0
+
+	# This fields should be hidden if the user is not logged in
+	hiddenFields = pdffile,uid
+	
+	# Link to PDF-File
+	filelink {
+      path = uploads/tx_mmpropman/ 
+	  path2 = uploads/media/
+      icon = 1
+      size = 1
+      size.wrap = ( | )
+      jumpurl = 1
+	  jumpurl.secure = 1
+      target = _blank
+	  # icon.wrap = <td> | </td>
+	  # file.fontTag = {$styles.content.uploads.wrap}
+	  # file.wrap = <td1> | </td1>
+	  # stdWrap = <tr> | </tr>
+	  }
+	
+	# Kann z.B. für die Immobilie der Woche eingestellt werden
+	# templateFile = list_view2.tmpl
+  
+	mytemplate = TEMPLATE
+	mytemplate {
+		template = FILE
+		template.file = EXT:user_bctest2/pii/res/
+		}
+}
+
+plugin.tx_mmpropman_pi1 {
+	CMD =
+	pidList =
+	recursive =
+	}
+
+plugin.tx_mmpropman_pi1.secureCheck {
+	# Is Login enabled
+	enableLogin = 0
+
+	# LoginForm schaut hier nach den Usern (pid) (FEUsers)
+	feUserPage = 43
+	
+	# Loginbox on every detail
+	useStrictLogin = 0
+	
+	# This eMail-Adresse get's the Info-Mail. If no eMail ist specified
+	# not InfoMail will be send
+	eMailAtLogon = 
+	
+	# ID the logged in user / Im Backend die Nummer suchen
+	baseGroupID = 4 
+
+	# Name of Group (Defaultgroup for logged in user)	
+	baseGroupName = DefaultGroup
+	
+	# Seite für die Benutzerregistrierung
+	registrationPage = 47
+	}
+	
+plugin.tx_mmpropman_pi1.singleView {
+	showFieldNames = 1
+
+	#links to alternative PageID
+	backlinkToAltPage = 0
+	
+	displayOrder ( 
+		[marker singleview.rubrik1],
+		objnr, title, description,  
+		pricecategory, immotype, salestype,region,
+		[marker singleview.rubrik2],
+		location, yearofconstruction, livingarea, area, descposition, numberrooms, 
+		numberbedrooms, bath, toilet, kitchen, interiorequipment, furnished, 
+		stove, wellness, terbalkgar, basement, garage, heating, pdffiles 
+		)
+	
+	hideIfEmpty (
+		location, yearofconstruction, livingarea, area, descposition, numberrooms, 
+		numberbedrooms, bath, toilet, kitchen, interiorequipment, furnished, 
+		stove, wellness, terbalkgar, basement, garage, heating, pdffiles 
+		)
+		
+	images {
+		file.maxW = 190
+		wrap = | <br>
+		
+	    imageLinkWrap = 1
+	    imageLinkWrap {
+	         bodyTag = <BODY bgColor=black>
+	         wrap = <A href="javascript:close();"> | </A>
+	         width = 500m
+	         height = 400m
+	         JSwindow = 1
+	         JSwindow.newWindow = 1
+	         JSwindow.expand = 17,20
+			 enable = 1
+	         }
+		}
+	}
+		
+plugin.tx_mmpropman_pi1.listView {
+	results_at_a_time = 6
+	maxPages =
+	showModeSelector = 0
+	showBrowserResults = 1
+	showHeader = 0
+	hide_list_view = 0
+	
+	#links to alternative PageID
+	linkToAltPage = 0
+	
+	# Wenn keine Einträge gefunden wurden, wird auf diese Seite gesprungen
+	noItemsFoundPage = 
+	
+	# Die TableClasse kann hier geändert werden	(z.B. Immo der Woche)
+	# tableClassName = table_weekly
+	
+	# PreView - Image
+	preview {
+		file.maxW = 150
+		}
+		
+	mode_selector_order1 = crdate
+	mode_selector_order1_desc_flag = 0
+	mode_selector_order2 = objnr
+	mode_selector_order2_desc_flag = 0
+	mode_selector_order3 = title
+	mode_selector_order3_desc_flag = 0
+	}
+
+plugin.tx_mmpropman_pi1.loginForm {
+	login < tt_content.login.20
+	login.dataArray.20.label >
+	login.dataArray.20.label = Kennwort:
+	login.dataArray.20.label.lang.de = Kennwort:
+	login.type >
+	}
+	
+plugin.tx_mmpropman_pi1.searchForm {
+	10 = USER
+	10 {
+		userFunc = tx_mmpropman_pi1->testUSERObj
+		10 = TEXT
+		10.value = Hallo Function
+		}
+	search_on_top = 0
+	search_bottom = 1
+	
+	form = FORM
+	form {
+		stdWrap.wrap=<table border="0" cellspacing="1" cellpadding="1" class="csc-searchform-mmpropman"> | </table>
+		layout=<tr><td class="csc-form-labelcell">###LABEL###</td><td class="csc-form-fieldcell">###FIELD###</td></tr>
+		labelWrap.wrap=<span class="csc-form-label">|</span>
+		commentWrap.wrap=<p class="csc-form-comment">|</p>
+		radioWrap.wrap=<span class="csc-form-radio">|</span><br />
+		COMMENT.layout=<tr><td colspan="2" class="csc-form-commentcell">###LABEL###</td></tr>
+		CHECK.layout=<tr class="csc-form-chechbox-row"><td>&nbsp;</td><td class="csc-form-fieldcell-checkbox"><span class="csc-form-field-checkbox">###FIELD###</span> <span class="csc-form-label-checkbox">###LABEL###</span></td></tr>
+	
+	  type = 
+	  
+	  dataArray {
+	    10.type = tx_mmpropman_pi1[search][immotype]=select
+	    # BEL:tx_mmpropman_data.immotype - must be something like tx_mmpropman_data.immotype.I.1... in locallang_db.php
+	    10.valueArray = BEL:tx_mmpropman_data.immotype
+	    10.valueArray {
+	    	# Entry in locallang.php
+				5.label = search_form.immotype
+				5.value = -1 
+	    	}
+			
+	    20.type = tx_mmpropman_pi1[search][region]=select
+	    20.valueArray = DB:tx_mmpropman_region:region:uid
+	    20.valueArray {
+				5.label = search_form.region
+				5.value = -1 
+	    	}
+
+	    25.type = tx_mmpropman_pi1[search][location]=select
+	    25.valueArray = DB:tx_mmpropman_data:location:location
+	    25.valueArray {
+				5.label = search_form.location
+				5.value = -1 
+	    	}
+	    	
+	    30.type = tx_mmpropman_pi1[search][salestype]=radio
+	    30.valueArray = BEL:tx_mmpropman_data.salestype
+			
+	    40.type = tx_mmpropman_pi1[search][pricecategory]=select
+	    40.valueArray = BEL:tx_mmpropman_data.pricecategory
+	    40.valueArray {
+				5.label = search_form.pricecategory
+				5.value = -1 
+	    	}
+			
+	    50.type = submit=submit
+	    50.value = search_form.submit
+	  	}
+		hiddenFields {
+			no_cache = TEXT
+			no_cache.value = 1
+			}
+	  }
+	}
+
+plugin.tx_mmpropman_pi1.requestForm {
+	enable = 0
+	form < tt_content.mailform.20 
+	form {
+		type >
+		dataArray >
+		hiddenFields >
+		data >
+		recipient >
+		}
+	#form.data.field = bodytext
+	
+	form {
+	  recipient = 
+	  #type = 0
+	  
+	  dataArray {
+ 			10.label = singelview.request_form.name
+	    10.type = tx_mmpropman_pi1[request][name]=input
+	    10.value = 
+
+ 			20.label = singelview.request_form.first_name
+	    20.type = tx_mmpropman_pi1[request][first_name]=input
+	    20.value = 
+
+ 			30.label = singelview.request_form.email
+	    30.type = tx_mmpropman_pi1[request][email]=input
+	    30.value = 
+    	30.specialEval = EMAIL	  
+			30.required = 1
+			
+ 			40.label = singelview.request_form.remark
+	    40.type = tx_mmpropman_pi1[request][first_name]=textarea,40,10
+	    40.value = 
+			
+	    50.type = tx_mmpropman_pi1[request][submit]=submit
+	    50.value = singelview.request_form.submit
+	  	}
+	  	
+		hiddenFields {
+			no_cache = TEXT
+			no_cache.value = 1
+			}
+	  }
+	}
+	
+				
+# Bestimmte Feldnamen können hier gefitert werden
+#plugin.tx_mmpropman_pi1.filter {
+#	immotype=3
+#	salestype=0
+#   calendarweek=1 || true
+#	}
+	
+# Example of default set CSS styles (these go into the document header):
+plugin.tx_mmpropman_pi1._CSS_DEFAULT_STYLE (
+  	.tx-mmpropman-pi1 H2 { margin-top: 0px; margin-bottom: 0px; }
+	)
+
+# Example of how to overrule LOCAL_LANG values for the plugin:
+plugin.tx_mmpropman_pi1._LOCAL_LANG.default {
+  	pi_list_searchBox_search = Search!
+	}
+
+# Example of how to set default values from TS in the incoming array, $this->piVars of the plugin:
+plugin.tx_mmpropman_pi1._DEFAULT_PI_VARS.test = test

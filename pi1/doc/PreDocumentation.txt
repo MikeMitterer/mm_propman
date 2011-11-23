@@ -1,0 +1,5 @@
+Template einbinden
+
+MailformPlus installieren (Nur bei Lebenberg)
+FrontEndUserAdmin (nur für automatische Benutzerregistrierung)
+	Eigenes Template mit settings anlegen

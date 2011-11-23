@@ -1,0 +1,269 @@
+plugin.tx_mmpropman_pi1 {
+	allowCaching = 0
+	language = de;
+	
+
+	# This fields should be hidden if the user is not logged in
+	hiddenFields = pdffile,uid
+	
+	# Link to PDF-File
+	filelink {
+      path = uploads/tx_mmpropman/ 
+	  path2 = uploads/media/
+      icon = 1
+      size = 1
+      size.wrap = ( | )
+      jumpurl = 1
+	  jumpurl.secure = 1
+      target = _blank
+	  # icon.wrap = <td> | </td>
+	  # file.fontTag = {$styles.content.uploads.wrap}
+	  # file.wrap = <td1> | </td1>
+	  # stdWrap = <tr> | </tr>
+	  }
+	
+	# Kann z.B. für die Immobilie der Woche eingestellt werden
+	# templateFile = list_view2.tmpl
+  
+	mytemplate = TEMPLATE
+	mytemplate {
+		template = FILE
+		template.file = EXT:user_bctest2/pii/res/
+		}
+}
+
+plugin.tx_mmpropman_pi1 {
+	CMD =
+	pidList =
+	recursive =
+	}
+
+plugin.tx_mmpropman_pi1.secureCheck {
+	# LoginForm schaut hier nach den Usern (pid) (FEUsers)
+	feUserPage = 43
+	
+	# Loginbox on every detail
+	useStrictLogin = 1
+	
+	# This eMail-Adresse get's the Info-Mail. If no eMail ist specified
+	# not InfoMail will be send
+	eMailAtLogon = office@bitcon.at
+	
+	# ID the logged in user / Im Backend die Nummer suchen
+	baseGroupID = 1 
+
+	# Name of Group (Defaultgroup for logged in user)	
+	baseGroupName = DefaultGroup
+	
+	# Seite für die Benutzerregistrierung
+	registrationPage = 47
+	}
+	
+plugin.tx_mmpropman_pi1.singleView {
+	showFieldNames = 1
+	
+	displayOrder ( 
+		[marker singleview.rubrik1],
+		objnr, title, description,  
+		pricecategory, immotype, salestype,region,
+		[marker singleview.rubrik2],
+		location, yearofconstruction, livingarea, area, descposition, numberrooms, 
+		numberbedrooms, bath, toilet, kitchen, interiorequipment, furnished, 
+		stove, wellness, terbalkgar, basement, garage, heating, pdffiles 
+		)
+	
+	hideIfEmpty (
+		location, yearofconstruction, livingarea, area, descposition, numberrooms, 
+		numberbedrooms, bath, toilet, kitchen, interiorequipment, furnished, 
+		stove, wellness, terbalkgar, basement, garage, heating, pdffiles 
+		)
+		
+	images {
+		file.maxW = 190
+		wrap = | <br>
+		
+	    imageLinkWrap = 1
+	    imageLinkWrap {
+	         bodyTag = <BODY bgColor=black>
+	         wrap = <A href="javascript:close();"> | </A>
+	         width = 1024m
+	         height = 768m
+	         JSwindow = 1
+	         JSwindow.newWindow = 1
+	         JSwindow.expand = 17,20
+			 enable = 1
+	         }
+		}
+	}
+		
+plugin.tx_mmpropman_pi1.listView {
+	results_at_a_time = 6
+	maxPages =
+	showSearchBox = 0
+	showModeSelector = 0
+	showBrowserResults = 1
+	showHeader = 0
+	
+	#links to alternative PageID
+	#linkToAltPage = 
+	
+	# Wenn keine Einträge gefunden wurden, wird auf diese Seite gesprungen
+	noItemsFoundPage = 4
+	
+	# Die TableClasse kann hier geändert werden	(z.B. Immo der Woche)
+	# tableClassName = table_weekly
+	
+	# PreView - Image
+	preview {
+		file.maxW = 150
+		}
+	}
+
+plugin.tx_mmpropman_pi1.loginForm {
+	login < tt_content.login.20
+	login.dataArray.20.label >
+	login.dataArray.20.label = Kennwort:
+	login.dataArray.20.label.lang.de = Kennwort:
+	login.type >
+	}
+plugin.tx_mmpropman_pi1.searchForm {
+	form = FORM 
+	form {
+	  stdWrap = Test1 | Test2
+	  type = 39
+	  layout = ###LABEL######FIELD###<br>
+	  RADIO.layout = ###FIELD###
+	  
+	  dataArray {
+	    10.type = tx_mmpropman_pi1[search][immotype]=select
+	    10.valueArray {
+			5.label = - Immobilienart -   
+			5.value = -1 
+			10.label = Grundstück
+			10.value = 0
+			20.label = Gewerbe
+			20.value = 1
+			#30.selected = 1
+			30.label = Haus
+			30.value = 2
+			40.label = Wohnung
+			40.value = 3
+			50.label = Sonstiges
+			50.value = 4
+	    	}
+			
+	    20.type = tx_mmpropman_pi1[search][region]=select
+	    20.valueArray {
+			5.label = - Region -   
+			5.value = -1 
+			10.label = Bezirk Kitzbühel   
+			10.value = 4 
+			#20.selected = 1
+			20.label = Kitzbühel   
+			20.value = 5 
+			30.label = Westendorf   
+			30.value = 6 
+			40.label = Aurach   
+			40.value = 8 
+			50.label = Jochberg   
+			50.value = 9 
+			60.label = Reith bei Kitzbühel    
+			60.value = 10 
+			70.label = Kirchberg   
+			70.value = 11 
+			80.label = Ellmau   
+			80.value = 12 
+			90.label = Kitzbühel-Gundhabing   
+			90.value = 13 
+			100.label = Brixen   
+			100.value = 14 
+			110.label = Fieberbrunn   
+			110.value = 15 
+			120.label= Aschau bei Kirchberg   
+			120.value = 16 
+			130.label = Waidring 	
+			130.value = 18
+			140.label = Going 	
+			140.value = 19
+			150.label = St. Johann i. T. 	
+			150.value = 20
+			160.label = Scheffau 	
+			160.value = 21
+			170.label = Kiefersfelden 	
+			170.value = 22
+			180.label = Kufstein 	
+			180.value = 23
+			190.label = Salzburg 	
+			190.value = 24
+			200.label = Oberndorf  	
+			200.value = 25
+			210.label = Wildsch&ouml;nau 	
+			210.value = 26
+			220.label = Pinzgau 	
+			220.value = 27
+			230.label = Stuhlfelden
+			230.value = 28
+	    	}
+		
+	    30.type = tx_mmpropman_pi1[search][salestype]=radio
+	    30.valueArray {
+			#10.selected = 1
+			10.label = Kauf
+			10.value = 0
+			20.label = Miete
+			20.value = 1
+	    	}
+			
+	    40.type = tx_mmpropman_pi1[search][pricecategory]=select
+	    40.valueArray {
+			5.label = - Preiskategorie -   
+			5.value = -1 
+			10.label = Nicht spezifiziert
+			10.value = 0
+			20.label = 0 - 1.000
+			20.value = 1
+			30.label = 1.000 - 1.500
+			30.value = 2
+			40.label = 1.500 und mehr
+			40.value = 3
+			50.label = 0 - 500.000
+			50.value = 4
+			60.label = 500.000 - 1 Mio.
+			60.value = 5
+			70.label = 1 Mio. - 1&sbquo;5 Mio
+			70.value = 6
+			80.label = 1&sbquo;5 Mio und mehr	
+			80.value = 7
+	    	}
+			
+	    50.type = submit=submit
+	    50.value = Schnellsuche
+	  	}
+		hiddenFields {
+			no_cache = TEXT
+			no_cache.value = 1
+			}
+	  }
+	}
+	
+	
+				
+# Bestimmte Feldnamen können hier gefitert werden
+#plugin.tx_mmpropman_pi1.filter {
+#	immotype=3
+#	salestype=0
+#   calendarweek=1 || true
+#	}
+	
+# Example of default set CSS styles (these go into the document header):
+plugin.tx_mmpropman_pi1._CSS_DEFAULT_STYLE (
+  	.tx-mmpropman-pi1 H2 { margin-top: 0px; margin-bottom: 0px; }
+	)
+
+# Example of how to overrule LOCAL_LANG values for the plugin:
+plugin.tx_mmpropman_pi1._LOCAL_LANG.default {
+  	pi_list_searchBox_search = Search!
+	}
+
+# Example of how to set default values from TS in the incoming array, $this->piVars of the plugin:
+plugin.tx_mmpropman_pi1._DEFAULT_PI_VARS.test = test

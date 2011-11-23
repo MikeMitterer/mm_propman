@@ -1,0 +1,187 @@
+####################################
+# IMPORTANT
+####################################
+# if you want to upload files make sure you define the following
+# TypoScript settings:
+####################################
+plugin.tx_thmailformplus_pi1.saveDB = 1
+plugin.tx_thmailformplus_pi1.saveDB {
+    dbTable = tt_content
+    fileUpload = uploads/pics/
+    fileTypes = jpg,gif,png,jpeg
+
+    # set maximum filesize to 100Kb
+    fileSize = 100000
+
+    # change .96. to an existing page-ID in your TYPO3 project
+    dbinsert=pid:96,hidden:0,CType:textpic
+
+    # if dbkey is not set: "uid" is taken
+    dbkey =uid
+
+    # [inputFieldName]:[DBName]
+    mapping=name:header,subject:bodytext,photo:image,photo2:image
+		      
+}
+
+<!-- ###TEMPLATE_FORM### begin -->
+<form name="Formular" method="post" action="index.php" enctype="multipart/form-data">
+<input type="hidden" name="id" value="###PID###">
+<input type="hidden" name="submitted" value="1">
+<input type="hidden" name="L" value="0">
+<input type="hidden" name="type" value="###value_type###">
+###ERROR###
+<table border="0" cellspacing="2" cellpadding="0">
+<tr>
+	<td valign="top">Name ###CAPTCHA###</td>
+	<td valign="top">###error_name###<input type="text" name="name" value="###value_name###"></td>
+</tr>
+<tr>
+	<td valign="top">Subject</td>
+	<td valign="top">###error_subject###<input type="text" name="subject" value="###value_subject###"></td>
+</tr>
+<tr>
+	<td valign="top">e-mail</td>
+	<td valign="top">###error_email###<input type="text" name="email"  value="###value_email###"></td>
+</tr>
+<tr>
+	<td valign="top">Phone</td>
+	<td valign="top">###error_phone###<input type="text" name="phone" value="###value_phone###"></td>
+</tr>
+<tr>
+	<td valign="top">ObjNr</td>
+	<td valign="top">###error_objnr###<input type="text" name="objnr" value="###objnr###"></td>
+</tr>
+<tr>
+	<td valign="top">TestMike</td>
+	<td valign="top">###error_tx_mmpropman_pi1_title###<input type="text" name="tx_mmpropman_pi1_title" value="###value_tx_mmpropman_pi1_title###"></td>
+</tr>
+<tr>
+	<td valign="top">Topic</td>
+	<td valign="top">###error_topic###<select name="topic" style="width:320px;">
+		<option value="leer" ###selected_topic_leer###></option>
+		<option value="webdesign" ###selected_topic_webdesign###>Webdesign</option>
+		<option value="hosting" ###selected_topic_hosting###>Webhosting</option>
+		<option value="price" ###selected_topic_price###>Price for...</option>
+		<option value="feedback" ###selected_topic_feedback###>Feedback</option>
+		</select></td>
+</tr>
+<tr>
+	<td valign="top">Text</td>
+	<td valign="top"><textarea cols="50" rows="5" name="text" style="width:320px;">###value_text###</textarea></td>
+</tr>
+<tr>
+	<td valign="top" colspan="2" style="padding-top:2px;padding-bottom:2px;"><br />please contact me via:</td>
+</tr>
+<tr>
+	<td valign="top">&nbsp;</td>
+	<td valign="top"><input type="radio" name="contact_via" value="email" style="border-style:none;" ###checked_contact_via_email###>e-mail <input type="radio" name="contact_via" value="phone" style="border-style:none;" ###checked_contact_via_phone###>Phone</td>
+</tr>
+<tr>
+	<td valign="top" colspan="2" style="padding-top:2px;padding-bottom:2px;"><br />please send us your photo...</td>
+</tr>
+<tr>
+	<td valign="top">&nbsp;</td>
+	<td valign="top">###error_filesize######error_filetype###<input type="file" name="photo" size="50" maxlength="50000" accept="image"><br>
+	   <input type="file" name="photo2" size="50" maxlength="50000" accept="image"></td>
+</tr>
+<tr>
+	<td>&nbsp;</td>
+	<td valign="top" align="left"><input type="submit" value="submit"></td>
+</tr>
+</table>
+</form>
+<!-- ###TEMPLATE_FORM### end -->
+
+
+
+
+<!-- ###TEMPLATE_SUBMITTED_OK### begin
+  OPTIONAL - will be shown if form was submitted and all required fields were filled out
+-->
+<b>Thank you, your request will be answered soon.</b>
+you have uploaded the following files:<br>
+###UPLOAD1###<br>
+###UPLOAD2###<br>
+<hr>
+or:<br>
+###photo###<br>
+###photo2###
+<!-- ###TEMPLATE_SUBMITTED_OK### end -->
+
+
+<!-- ###TEMPLATE_EMAIL_USER### begin
+    OPTIONAL - this will be the email text that is sent to the user (plaintext!)
+-->
+
+Hello ###name###,
+You have just filled out the form and asked about:
+###subject###
+
+you uploaded the following files:
+###photo###
+###photo2###
+
+We will contact you as soon as possible,
+ciao!
+<!-- ###TEMPLATE_EMAIL_USER### end -->
+
+ 
+
+ 
+
+<!-- ###TEMPLATE_EMAIL_RECEIVER### begin
+    OPTIONAL - this will be the email text that is sent to the admin (plaintext!)
+    (admin-email = the email you can specify in the mailformplus plugin)
+-->
+Hello admin,
+A user just filled out the form:
+name: ###name###
+subject: ###subject###
+
+uploaded files:
+###photo###
+###photo2###
+
+please contact the user: ###email###
+<!-- ###TEMPLATE_EMAIL_RECEIVER### end -->
+ 
+
+
+
+<!-- ###TEMPLATE_ERROR### begin -->
+<!-- ###ERROR_START### begin 
+this is used for the global error marker ###ERROR### -->
+The following errors occured:
+<ul>
+<!-- ###ERROR_START### end -->
+
+
+<!-- ###ERROR_END### begin 
+this is used for the global error marker ###ERROR### -->
+</ul>
+<!-- ###ERROR_END### end -->
+
+ 
+
+<!-- ###ERROR_FILESIZE### begin 
+this is used if you use the file upload functionality -->
+<li>File is too large!</li>
+<!-- ###ERROR_FILESIZE### end -->
+
+ 
+
+<!-- ###ERROR_FILETYPE### begin 
+this is used if you use the file upload functionality -->
+<li>File is not allowed!</li>
+<!-- ###ERROR_FILETYPE### end -->
+
+
+ 
+
+<!-- ###ERROR_name### begin -->
+<li>insert Title</li>
+<!-- ###ERROR_name### end -->
+ 
+
+<!-- ###TEMPLATE_ERROR### end -->
